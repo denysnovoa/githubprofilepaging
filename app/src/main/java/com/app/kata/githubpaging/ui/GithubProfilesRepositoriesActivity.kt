@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.app.kata.githubpaging.databinding.ActivitySearchRepositoriesBinding
 import com.app.kata.githubpaging.di.Injection
 import com.app.kata.githubpaging.ui.adapter.GithubProfileAdapter
@@ -28,6 +29,10 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
 
     viewModel = ViewModelProvider(this, Injection.provideViewModelFactory())
       .get(GithubProfileRepositoriesViewModel::class.java)
+
+    binding.list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
+    binding.list.adapter = adapter
   }
 
   private fun updateRepoListFromInput() {
@@ -38,7 +43,7 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
     searchJob?.cancel()
     searchJob = lifecycleScope.launch {
       viewModel.searchGithubProfiles(query).collectLatest {
-        adapter.submitData(it)
+        //adapter.submitData(it)
       }
     }
   }
