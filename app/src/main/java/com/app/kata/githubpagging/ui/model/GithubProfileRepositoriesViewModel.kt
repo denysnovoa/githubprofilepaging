@@ -1,4 +1,4 @@
-package com.app.kata.githubpaggingcore.ui.model
+package com.app.kata.githubpagging.ui.model
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
