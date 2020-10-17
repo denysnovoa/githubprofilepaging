@@ -25,8 +25,8 @@ class GithubProfileViewHolder(private val binding: GithubProfileItemBinding) :
     }
   }
 
-  fun bind(githubProfile: GithubProfileDto) {
-    if (profile == null) {
+  fun bind(githubProfile: GithubProfileDto?) {
+    if (githubProfile == null) {
       val resources = itemView.resources
       with(binding) {
         repoName.text = resources.getString(R.string.loading)
