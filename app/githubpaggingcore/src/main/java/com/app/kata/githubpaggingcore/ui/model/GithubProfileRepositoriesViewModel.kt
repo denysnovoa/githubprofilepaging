@@ -17,9 +17,8 @@ class GithubProfileRepositoriesViewModel(private val repository: GithubProfileRe
     fun searchGithubProfiles(queryString: String): Flow<PagingData<GithubProfileDto>> {
         val lastResult = currentSearchResult
         if (queryString == currentQueryValue && lastResult != null) {
-            lastResult
+            return lastResult
         }
-
         currentQueryValue = queryString
 
         val newResult = repository.getSearchResultStream(queryString)
