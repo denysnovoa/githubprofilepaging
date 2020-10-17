@@ -9,22 +9,22 @@ import com.app.kata.githubpaggingcore.data.source.api.model.GithubProfileDto
 import kotlinx.coroutines.flow.Flow
 
 class GithubProfileRepositoriesViewModel(private val repository: GithubProfileRepository) :
-    ViewModel() {
+  ViewModel() {
 
-    private var currentQueryValue: String? = null
-    private var currentSearchResult: Flow<PagingData<GithubProfileDto>>? = null
+  private var currentQueryValue: String? = null
+  private var currentSearchResult: Flow<PagingData<GithubProfileDto>>? = null
 
-    fun searchGithubProfiles(queryString: String): Flow<PagingData<GithubProfileDto>> {
-        val lastResult = currentSearchResult
-        if (queryString == currentQueryValue && lastResult != null) {
-            return lastResult
-        }
-        currentQueryValue = queryString
-
-        val newResult = repository.getSearchResultStream(queryString)
-            .cachedIn(viewModelScope)
-        currentSearchResult = newResult
-
-        return newResult
+  fun searchGithubProfiles(queryString: String): Flow<PagingData<GithubProfileDto>> {
+    val lastResult = currentSearchResult
+    if (queryString == currentQueryValue && lastResult != null) {
+      return lastResult
     }
+    currentQueryValue = queryString
+
+    val newResult = repository.getSearchResultStream(queryString)
+      .cachedIn(viewModelScope)
+    currentSearchResult = newResult
+
+    return newResult
+  }
 }

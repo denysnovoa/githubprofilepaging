@@ -10,15 +10,15 @@ import kotlinx.coroutines.flow.Flow
 
 class GithubProfileRepository(private val apiService: GithubPagingApiService) {
 
-    fun getSearchResultStream(query: String): Flow<PagingData<GithubProfileDto>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = NETWORK_PAGE_SIZE,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { GithubPagingSource(apiService, query) }
-        ).flow
-    }
+  fun getSearchResultStream(query: String): Flow<PagingData<GithubProfileDto>> {
+    return Pager(
+        config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE,
+            enablePlaceholders = false
+        ),
+        pagingSourceFactory = { GithubPagingSource(apiService, query) }
+    ).flow
+  }
 }
 
 private const val NETWORK_PAGE_SIZE = 50
