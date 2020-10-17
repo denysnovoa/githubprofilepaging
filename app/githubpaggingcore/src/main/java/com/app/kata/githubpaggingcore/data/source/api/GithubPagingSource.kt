@@ -1,9 +1,7 @@
-package com.app.kata.githubpaggingcore.repository
+package com.app.kata.githubpaggingcore.data.source.api
 
 import androidx.paging.PagingSource
-import com.app.kata.githubpaggingcore.repository.source.api.GithubPagingApiService
-import com.app.kata.githubpaggingcore.repository.source.api.IN_QUALIFIER
-import com.app.kata.githubpaggingcore.repository.source.api.model.GithubProfileDto
+import com.app.kata.githubpaggingcore.data.source.api.model.GithubProfileDto
 import retrofit2.HttpException
 import java.io.IOException
 

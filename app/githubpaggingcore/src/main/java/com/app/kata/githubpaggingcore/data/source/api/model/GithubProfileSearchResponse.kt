@@ -1,4 +1,4 @@
-package com.app.kata.githubpaggingcore.repository.source.api.model
+package com.app.kata.githubpaggingcore.data.source.api.model
 
 import com.google.gson.annotations.SerializedName
 

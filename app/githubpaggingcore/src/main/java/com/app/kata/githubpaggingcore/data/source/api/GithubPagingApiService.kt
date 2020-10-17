@@ -1,6 +1,6 @@
-package com.app.kata.githubpaggingcore.repository.source.api
+package com.app.kata.githubpaggingcore.data.source.api
 
-import com.app.kata.githubpaggingcore.repository.source.api.model.GithubProfileSearchResponse
+import com.app.kata.githubpaggingcore.data.source.api.model.GithubProfileSearchResponse
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
