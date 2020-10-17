@@ -2,6 +2,7 @@ package com.app.kata.githubpaging.ui.adapter
 
 import android.content.Intent
 import android.net.Uri
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -66,6 +67,8 @@ class GithubProfileViewHolder(private val binding: GithubProfileItemBinding) :
   }
 
   companion object {
-    fun create(parent: ViewGroup) = GithubProfileViewHolder(GithubProfileItemBinding.bind(parent))
+    fun create(parent: ViewGroup) = GithubProfileViewHolder(
+      GithubProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
   }
 }
