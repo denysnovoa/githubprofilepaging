@@ -11,13 +11,11 @@ import retrofit2.http.Query
 interface GithubPagingApiService {
 
   @GET("search/repositories?sort=stars")
-  fun searchRepos(
-      @Query("q") query: String,
-      @Query("page") page: Int,
-      @Query("per_page") itemsPerPage: Int
-  ): GithubProfileSearchResponse {
-    TODO("Not yet implemented")
-  }
+  suspend fun searchRepos(
+    @Query("q") query: String,
+    @Query("page") page: Int,
+    @Query("per_page") itemsPerPage: Int
+  ): GithubProfileSearchResponse
 
   companion object {
     private const val BASE_URL = "https://api.github.com/"
