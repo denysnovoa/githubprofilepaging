@@ -1,13 +1,14 @@
 package com.app.kata.githubpaging.ui.adapter
 
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
 
 class GithubProfileAdapter :
-  ListAdapter<GithubProfileDto, RecyclerView.ViewHolder>(GITHUB_PROFILE_COMPARATOR) {
+  PagingDataAdapter<GithubProfileDto, RecyclerView.ViewHolder>(GITHUB_PROFILE_COMPARATOR) {
 
   override fun onCreateViewHolder(
     parent: ViewGroup,
