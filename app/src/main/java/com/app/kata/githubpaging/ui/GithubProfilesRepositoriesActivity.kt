@@ -3,7 +3,9 @@ package com.app.kata.githubpaging.ui
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -43,6 +45,8 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
     val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
     search(query)
     initSearch(query)
+
+    binding.retryButton.setOnClickListener { adapter.retry() }
   }
 
   private fun initAdapter() {
@@ -50,6 +54,25 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
       header = GithubProfileLoadStateAdapter { adapter.retry() },
       footer = GithubProfileLoadStateAdapter { adapter.retry() }
     )
+
+    adapter.addLoadStateListener { loadState ->
+      binding.list.isVisible = loadState.source.refresh is LoadState.NotLoading
+      binding.progressBar.isVisible = loadState.source.refresh is LoadState.Loading
+      binding.retryButton.isVisible = loadState.source.refresh is LoadState.Error
+
+      // Toast on any error, regardless of whether it came from RemoteMediator or PagingSource
+      val errorState = loadState.source.append as? LoadState.Error
+        ?: loadState.source.prepend as? LoadState.Error
+        ?: loadState.append as? LoadState.Error
+        ?: loadState.prepend as? LoadState.Error
+      errorState?.let {
+        Toast.makeText(
+          this,
+          "\uD83D\uDE28 Wooops ${it.error}",
+          Toast.LENGTH_LONG
+        ).show()
+      }
+    }
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
