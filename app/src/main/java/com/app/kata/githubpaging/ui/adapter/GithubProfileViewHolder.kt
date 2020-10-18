@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.app.kata.githubpaging.R
-import com.app.kata.githubpaging.databinding.GithubProfileItemBinding
+import com.app.kata.githubpaging.databinding.GithubProfileViewItemBinding
 import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
 
-class GithubProfileViewHolder(private val binding: GithubProfileItemBinding) :
+class GithubProfileViewHolder(private val binding: GithubProfileViewItemBinding) :
   RecyclerView.ViewHolder(binding.root) {
 
   private var profile: GithubProfileDto? = null
@@ -68,7 +68,7 @@ class GithubProfileViewHolder(private val binding: GithubProfileItemBinding) :
 
   companion object {
     fun create(parent: ViewGroup) = GithubProfileViewHolder(
-      GithubProfileItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+      GithubProfileViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
   }
 }
