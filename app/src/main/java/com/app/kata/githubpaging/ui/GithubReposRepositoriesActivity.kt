@@ -36,7 +36,7 @@ class GithubReposRepositoriesActivity : AppCompatActivity() {
     val view = binding.root
     setContentView(view)
 
-    viewModel = ViewModelProvider(this, Injection.provideViewModelFactory())
+    viewModel = ViewModelProvider(this, Injection.provideViewModelFactory(this))
       .get(GithubRepoRepositoriesViewModel::class.java)
 
     binding.list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
