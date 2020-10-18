@@ -1,4 +1,4 @@
-# githubprofilepaging
+# githubrepospaging
 
 Code labs Android Paging
 

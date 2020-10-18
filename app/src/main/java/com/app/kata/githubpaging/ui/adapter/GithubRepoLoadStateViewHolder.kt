@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
-import com.app.kata.githubpaging.databinding.GithubProfilesLoadStateFooterViewItemBinding
+import com.app.kata.githubpaging.databinding.GithubRepoLoadStateFooterViewItemBinding
 
-class GithubProfileLoadStateViewHolder(
-  private val binding: GithubProfilesLoadStateFooterViewItemBinding,
+class GithubRepoLoadStateViewHolder(
+  private val binding: GithubRepoLoadStateFooterViewItemBinding,
   retry: () -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -28,8 +28,8 @@ class GithubProfileLoadStateViewHolder(
   companion object {
 
     fun create(parent: ViewGroup, retry: () -> Unit) =
-      GithubProfileLoadStateViewHolder(
-        GithubProfilesLoadStateFooterViewItemBinding.inflate(
+      GithubRepoLoadStateViewHolder(
+        GithubRepoLoadStateFooterViewItemBinding.inflate(
           LayoutInflater.from(parent.context),
           parent,
           false

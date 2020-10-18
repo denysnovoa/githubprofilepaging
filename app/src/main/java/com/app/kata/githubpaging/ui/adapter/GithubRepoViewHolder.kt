@@ -8,25 +8,25 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.app.kata.githubpaging.R
-import com.app.kata.githubpaging.databinding.GithubProfileViewItemBinding
-import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
+import com.app.kata.githubpaging.databinding.GithubRepoViewItemBinding
+import com.app.kata.githubpagingcore.data.source.api.model.GithubRepoDto
 
-class GithubProfileViewHolder(private val binding: GithubProfileViewItemBinding) :
+class GithubRepoViewHolder(private val binding: GithubRepoViewItemBinding) :
   RecyclerView.ViewHolder(binding.root) {
 
-  private var profile: GithubProfileDto? = null
+  private var repo: GithubRepoDto? = null
 
   init {
     binding.root.setOnClickListener {
-      profile?.url?.let { url ->
+      repo?.url?.let { url ->
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         binding.root.context.startActivity(intent)
       }
     }
   }
 
-  fun bind(githubProfile: GithubProfileDto?) {
-    if (githubProfile == null) {
+  fun bind(githubRepo: GithubRepoDto?) {
+    if (githubRepo == null) {
       val resources = itemView.resources
       with(binding) {
         repoName.text = resources.getString(R.string.loading)
@@ -36,12 +36,12 @@ class GithubProfileViewHolder(private val binding: GithubProfileViewItemBinding)
         repoForks.text = resources.getString(R.string.unknown)
       }
     } else {
-      githubProfile.showRepoData()
+      githubRepo.showRepoData()
     }
   }
 
-  private fun GithubProfileDto.showRepoData() {
-    this@GithubProfileViewHolder.profile = this
+  private fun GithubRepoDto.showRepoData() {
+    this@GithubRepoViewHolder.repo = this
 
     binding.repoName.text = fullName
 
@@ -59,7 +59,7 @@ class GithubProfileViewHolder(private val binding: GithubProfileViewItemBinding)
     // if the language is missing, hide the label and the value
     var languageVisibility = View.GONE
     if (!language.isNullOrEmpty()) {
-      val resources = this@GithubProfileViewHolder.itemView.context.resources
+      val resources = this@GithubRepoViewHolder.itemView.context.resources
       binding.repoLanguage.text = resources.getString(R.string.language, language)
       languageVisibility = View.VISIBLE
     }
@@ -67,8 +67,8 @@ class GithubProfileViewHolder(private val binding: GithubProfileViewItemBinding)
   }
 
   companion object {
-    fun create(parent: ViewGroup) = GithubProfileViewHolder(
-      GithubProfileViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    fun create(parent: ViewGroup) = GithubRepoViewHolder(
+      GithubRepoViewItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
   }
 }

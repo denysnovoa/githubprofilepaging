@@ -12,9 +12,9 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.app.kata.githubpaging.databinding.ActivitySearchRepositoriesBinding
 import com.app.kata.githubpaging.di.Injection
-import com.app.kata.githubpaging.ui.adapter.GithubProfileAdapter
-import com.app.kata.githubpaging.ui.adapter.GithubProfileLoadStateAdapter
-import com.app.kata.githubpaging.ui.model.GithubProfileRepositoriesViewModel
+import com.app.kata.githubpaging.ui.adapter.GithubReposAdapter
+import com.app.kata.githubpaging.ui.adapter.GithubRepoLoadStateAdapter
+import com.app.kata.githubpaging.ui.model.GithubRepoRepositoriesViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -22,11 +22,11 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
-class GithubProfilesRepositoriesActivity : AppCompatActivity() {
+class GithubReposRepositoriesActivity : AppCompatActivity() {
 
   private lateinit var binding: ActivitySearchRepositoriesBinding
-  private lateinit var viewModel: GithubProfileRepositoriesViewModel
-  private val adapter = GithubProfileAdapter()
+  private lateinit var viewModel: GithubRepoRepositoriesViewModel
+  private val adapter = GithubReposAdapter()
   private var searchJob: Job? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
     setContentView(view)
 
     viewModel = ViewModelProvider(this, Injection.provideViewModelFactory())
-      .get(GithubProfileRepositoriesViewModel::class.java)
+      .get(GithubRepoRepositoriesViewModel::class.java)
 
     binding.list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
     initAdapter()
@@ -51,8 +51,8 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
 
   private fun initAdapter() {
     binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
-      header = GithubProfileLoadStateAdapter { adapter.retry() },
-      footer = GithubProfileLoadStateAdapter { adapter.retry() }
+      header = GithubRepoLoadStateAdapter { adapter.retry() },
+      footer = GithubRepoLoadStateAdapter { adapter.retry() }
     )
 
     adapter.addLoadStateListener { loadState ->
@@ -92,7 +92,7 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
   private fun search(query: String) {
     searchJob?.cancel()
     searchJob = lifecycleScope.launch {
-      viewModel.searchGithubProfiles(query).collectLatest {
+      viewModel.searchGithubRepos(query).collectLatest {
         adapter.submitData(it)
       }
     }

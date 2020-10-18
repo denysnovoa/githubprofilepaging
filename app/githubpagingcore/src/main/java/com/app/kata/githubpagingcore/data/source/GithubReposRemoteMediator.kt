@@ -5,26 +5,26 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.app.kata.githubpagingcore.data.source.api.GithubPagingApiService
+import com.app.kata.githubpagingcore.data.source.api.GithubReposApiService
 import com.app.kata.githubpagingcore.data.source.api.GithubPagingSource.Companion.GITHUB_STARTING_PAGE_INDEX
 import com.app.kata.githubpagingcore.data.source.api.IN_QUALIFIER
-import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
-import com.app.kata.githubpagingcore.data.source.local.GithubProfileDatabase
-import com.app.kata.githubpagingcore.data.source.local.GithubProfileRemoteKeysDto
+import com.app.kata.githubpagingcore.data.source.api.model.GithubRepoDto
+import com.app.kata.githubpagingcore.data.source.local.GithubReposDatabase
+import com.app.kata.githubpagingcore.data.source.local.GithubRepoRemoteKeysDto
 import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
-class GithubProfileRemoteMediator(
+class GithubReposRemoteMediator(
   private val query: String,
-  private val service: GithubPagingApiService,
-  private val database: GithubProfileDatabase
-) : RemoteMediator<Int, GithubProfileDto>() {
+  private val service: GithubReposApiService,
+  private val database: GithubReposDatabase
+) : RemoteMediator<Int, GithubRepoDto>() {
 
   override suspend fun load(
     loadType: LoadType,
-    state: PagingState<Int, GithubProfileDto>
+    state: PagingState<Int, GithubRepoDto>
   ): MediatorResult {
     val page: Int = when (loadType) {
       LoadType.REFRESH -> {
@@ -62,16 +62,16 @@ class GithubProfileRemoteMediator(
       database.withTransaction {
         if (loadType == LoadType.REFRESH) {
           database.remoteKeysDao().clearRemoteKeys()
-          database.githubProfileDao().clearProfiles()
+          database.githubReposDao().clearProfiles()
         }
         val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
         val nextKey = if (endOfPaginationReached) null else page + 1
         val keys = repos.map {
-          GithubProfileRemoteKeysDto(githubProfileId = it.id, prevKey = prevKey, nextKey = nextKey)
+          GithubRepoRemoteKeysDto(githubRepoId = it.id, prevKey = prevKey, nextKey = nextKey)
         }
 
         database.remoteKeysDao().insertAll(keys)
-        database.githubProfileDao().insertAll(repos)
+        database.githubReposDao().insertAll(repos)
       }
 
       return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
@@ -82,8 +82,8 @@ class GithubProfileRemoteMediator(
     }
   }
 
-  private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, GithubProfileDto>):
-      GithubProfileRemoteKeysDto? {
+  private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, GithubRepoDto>):
+      GithubRepoRemoteKeysDto? {
     // Get the last page that was retrieved, that contained items.
     // From that last page, get the last item
     return state.pages.lastOrNull() { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
@@ -92,8 +92,8 @@ class GithubProfileRemoteMediator(
     }
   }
 
-  private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, GithubProfileDto>):
-      GithubProfileRemoteKeysDto? {
+  private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, GithubRepoDto>):
+      GithubRepoRemoteKeysDto? {
     // Get the first page that was retrieved, that contained items.
     // From that first page, get the first item
     return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { repo ->
@@ -103,8 +103,8 @@ class GithubProfileRemoteMediator(
   }
 
   private suspend fun getRemoteKeyClosestToCurrentPosition(
-    state: PagingState<Int, GithubProfileDto>
-  ): GithubProfileRemoteKeysDto? {
+    state: PagingState<Int, GithubRepoDto>
+  ): GithubRepoRemoteKeysDto? {
     // The paging library is trying to load data after the anchor position
     // Get the item closest to the anchor position
     return state.anchorPosition?.let { position ->

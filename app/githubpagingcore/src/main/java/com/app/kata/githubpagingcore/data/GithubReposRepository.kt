@@ -3,14 +3,14 @@ package com.app.kata.githubpagingcore.data
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.app.kata.githubpagingcore.data.source.api.GithubPagingApiService
+import com.app.kata.githubpagingcore.data.source.api.GithubReposApiService
 import com.app.kata.githubpagingcore.data.source.api.GithubPagingSource
-import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
+import com.app.kata.githubpagingcore.data.source.api.model.GithubRepoDto
 import kotlinx.coroutines.flow.Flow
 
-class GithubProfileRepository(private val apiService: GithubPagingApiService) {
+class GithubReposRepository(private val apiService: GithubReposApiService) {
 
-  fun getSearchResultStream(query: String): Flow<PagingData<GithubProfileDto>> {
+  fun getSearchResultStream(query: String): Flow<PagingData<GithubRepoDto>> {
     return Pager(
         config = PagingConfig(
             pageSize = NETWORK_PAGE_SIZE,

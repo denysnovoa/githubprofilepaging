@@ -4,24 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
+import com.app.kata.githubpagingcore.data.source.api.model.GithubRepoDto
 
 @Database(
-  entities = [GithubProfileDto::class, GithubProfileRemoteKeysDto::class],
+  entities = [GithubRepoDto::class, GithubRepoRemoteKeysDto::class],
   version = 1,
   exportSchema = false
 )
-abstract class GithubProfileDatabase : RoomDatabase() {
+abstract class GithubReposDatabase : RoomDatabase() {
 
-  abstract fun githubProfileDao(): GithubProfileDao
-  abstract fun remoteKeysDao(): GithubProfileRemoteKeysDao
+  abstract fun githubReposDao(): GithubReposDao
+  abstract fun remoteKeysDao(): GithubRepoRemoteKeysDao
 
   companion object {
 
     @Volatile
-    private var INSTANCE: GithubProfileDatabase? = null
+    private var INSTANCE: GithubReposDatabase? = null
 
-    fun getInstance(context: Context): GithubProfileDatabase =
+    fun getInstance(context: Context): GithubReposDatabase =
       INSTANCE ?: synchronized(this) {
         INSTANCE
           ?: buildDatabase(context).also { INSTANCE = it }
@@ -30,7 +30,7 @@ abstract class GithubProfileDatabase : RoomDatabase() {
     private fun buildDatabase(context: Context) =
       Room.databaseBuilder(
         context.applicationContext,
-        GithubProfileDatabase::class.java, "Github.db"
+        GithubReposDatabase::class.java, "Github.db"
       ).build()
   }
 }

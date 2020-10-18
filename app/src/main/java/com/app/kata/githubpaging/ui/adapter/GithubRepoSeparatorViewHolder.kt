@@ -3,10 +3,10 @@ package com.app.kata.githubpaging.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.kata.githubpaging.databinding.GithubProfileSeparatorViewItemBinding
+import com.app.kata.githubpaging.databinding.GithubRepoSeparatorViewItemBinding
 
-class GithubProfileSeparatorViewHolder(
-  private val binding: GithubProfileSeparatorViewItemBinding
+class GithubRepoSeparatorViewHolder(
+  private val binding: GithubRepoSeparatorViewItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
   fun bind(separatorText: String) {
@@ -14,9 +14,9 @@ class GithubProfileSeparatorViewHolder(
   }
 
   companion object {
-    fun create(parent: ViewGroup): GithubProfileSeparatorViewHolder {
-      return GithubProfileSeparatorViewHolder(
-        GithubProfileSeparatorViewItemBinding.inflate(
+    fun create(parent: ViewGroup): GithubRepoSeparatorViewHolder {
+      return GithubRepoSeparatorViewHolder(
+        GithubRepoSeparatorViewItemBinding.inflate(
           LayoutInflater.from(parent.context), parent, false
         )
       )

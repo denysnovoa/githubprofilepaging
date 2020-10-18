@@ -1,11 +1,12 @@
 package com.app.kata.githubpagingcore.data.source.api.model
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "github_profiles")
-data class GithubProfileDto(
-  @field:SerializedName("id") val id: Long,
+@Entity(tableName = "github_repos")
+data class GithubRepoDto(
+  @PrimaryKey @field:SerializedName("id") val id: Long,
   @field:SerializedName("name") val name: String,
   @field:SerializedName("full_name") val fullName: String,
   @field:SerializedName("description") val description: String?,

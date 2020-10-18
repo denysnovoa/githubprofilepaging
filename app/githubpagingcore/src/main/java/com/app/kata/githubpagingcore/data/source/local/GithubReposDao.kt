@@ -5,21 +5,21 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
+import com.app.kata.githubpagingcore.data.source.api.model.GithubRepoDto
 
 @Dao
-interface GithubProfileDao {
+interface GithubReposDao {
 
   @Insert(onConflict = OnConflictStrategy.REPLACE)
-  suspend fun insertAll(repos: List<GithubProfileDto>)
+  suspend fun insertAll(repos: List<GithubRepoDto>)
 
   @Query(
-    "SELECT * FROM github_profiles WHERE " +
+    "SELECT * FROM github_repos WHERE " +
         "name LIKE :queryString OR description LIKE :queryString " +
         "ORDER BY stars DESC, name ASC"
   )
-  fun profilesByName(queryString: String): PagingSource<Int, GithubProfileDto>
+  fun profilesByName(queryString: String): PagingSource<Int, GithubRepoDto>
 
-  @Query("DELETE FROM github_profiles")
+  @Query("DELETE FROM github_repos")
   suspend fun clearProfiles()
 }
