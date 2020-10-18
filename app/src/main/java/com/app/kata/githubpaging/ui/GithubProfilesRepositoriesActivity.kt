@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.app.kata.githubpaging.databinding.ActivitySearchRepositoriesBinding
 import com.app.kata.githubpaging.di.Injection
 import com.app.kata.githubpaging.ui.adapter.GithubProfileAdapter
+import com.app.kata.githubpaging.ui.adapter.GithubProfileLoadStateAdapter
 import com.app.kata.githubpaging.ui.model.GithubProfileRepositoriesViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -37,11 +38,18 @@ class GithubProfilesRepositoriesActivity : AppCompatActivity() {
       .get(GithubProfileRepositoriesViewModel::class.java)
 
     binding.list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-    binding.list.adapter = adapter
+    initAdapter()
 
     val query = savedInstanceState?.getString(LAST_SEARCH_QUERY) ?: DEFAULT_QUERY
     search(query)
     initSearch(query)
+  }
+
+  private fun initAdapter() {
+    binding.list.adapter = adapter.withLoadStateHeaderAndFooter(
+      header = GithubProfileLoadStateAdapter { adapter.retry() },
+      footer = GithubProfileLoadStateAdapter { adapter.retry() }
+    )
   }
 
   override fun onSaveInstanceState(outState: Bundle) {
