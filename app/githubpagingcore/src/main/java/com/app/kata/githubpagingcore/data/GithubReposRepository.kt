@@ -15,6 +15,11 @@ class GithubReposRepository(
 ) {
 
   fun getSearchResultStream(query: String): Flow<PagingData<GithubRepoDto>> {
+    // appending '%' so we can allow other characters to be before and after the query string
+    val dbQuery = "%${query.replace(' ', '%')}%"
+    val pagingSourceFactory = { database.githubReposDao().reposByName(dbQuery) }
+
+
     return Pager(
       config = PagingConfig(
         pageSize = NETWORK_PAGE_SIZE,

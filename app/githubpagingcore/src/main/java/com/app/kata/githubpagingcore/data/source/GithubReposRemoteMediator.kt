@@ -62,7 +62,7 @@ class GithubReposRemoteMediator(
       database.withTransaction {
         if (loadType == LoadType.REFRESH) {
           database.remoteKeysDao().clearRemoteKeys()
-          database.githubReposDao().clearProfiles()
+          database.githubReposDao().clearRepos()
         }
         val prevKey = if (page == GITHUB_STARTING_PAGE_INDEX) null else page - 1
         val nextKey = if (endOfPaginationReached) null else page + 1

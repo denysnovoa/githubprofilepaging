@@ -15,12 +15,12 @@ class GithubPagingSource(
     val apiQuery = query + IN_QUALIFIER
 
     return try {
-      val profilesDto = apiService.searchRepos(apiQuery, position, params.loadSize).items
+      val reposDto = apiService.searchRepos(apiQuery, position, params.loadSize).items
 
       LoadResult.Page(
-        data = profilesDto,
+        data = reposDto,
         prevKey = if (position == GITHUB_STARTING_PAGE_INDEX) null else position - 1,
-        nextKey = if (profilesDto.isEmpty()) null else position + 1
+        nextKey = if (reposDto.isEmpty()) null else position + 1
       )
 
     } catch (exception: IOException) {

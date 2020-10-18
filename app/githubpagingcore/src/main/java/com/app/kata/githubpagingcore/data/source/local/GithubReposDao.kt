@@ -18,8 +18,8 @@ interface GithubReposDao {
         "name LIKE :queryString OR description LIKE :queryString " +
         "ORDER BY stars DESC, name ASC"
   )
-  fun profilesByName(queryString: String): PagingSource<Int, GithubRepoDto>
+  fun reposByName(queryString: String): PagingSource<Int, GithubRepoDto>
 
   @Query("DELETE FROM github_repos")
-  suspend fun clearProfiles()
+  suspend fun clearRepos()
 }
