@@ -6,10 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
 
-@Database(entities = [GithubProfileDto::class], version = 1, exportSchema = false)
+@Database(
+  entities = [GithubProfileDto::class, GithubProfileRemoteKeysDto::class],
+  version = 1,
+  exportSchema = false
+)
 abstract class GithubProfileDatabase : RoomDatabase() {
 
   abstract fun githubProfileDao(): GithubProfileDao
+  abstract fun remoteKeyDao(): GithubProfileRemoteKeysDao
 
   companion object {
 

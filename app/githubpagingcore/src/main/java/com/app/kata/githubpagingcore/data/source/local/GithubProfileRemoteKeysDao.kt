@@ -9,10 +9,10 @@ import androidx.room.Query
 interface GithubProfileRemoteKeysDao {
 
   @Insert(onConflict = REPLACE)
-  suspend fun insertAll(remoteKey: List<GithubProfileRemoteKeys>)
+  suspend fun insertAll(remoteKey: List<GithubProfileRemoteKeysDto>)
 
   @Query("SELECT * FROM github_profile_remote_keys WHERE githubProfileId = :githubProfileId")
-  suspend fun remoteKeysRepoId(githubProfileId: Long): GithubProfileRemoteKeys?
+  suspend fun remoteKeysRepoId(githubProfileId: Long): GithubProfileRemoteKeysDto?
 
   @Query("DELETE FROM github_profile_remote_keys")
   suspend fun clearRemoteKeys()

@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "github_profile_remote_keys")
-class GithubProfileRemoteKeys(
+class GithubProfileRemoteKeysDto(
   @PrimaryKey
   val githubProfileId: Long,
   val prevKey: Int?,
