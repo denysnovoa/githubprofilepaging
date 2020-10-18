@@ -14,7 +14,7 @@ import com.app.kata.githubpagingcore.data.source.api.model.GithubProfileDto
 abstract class GithubProfileDatabase : RoomDatabase() {
 
   abstract fun githubProfileDao(): GithubProfileDao
-  abstract fun remoteKeyDao(): GithubProfileRemoteKeysDao
+  abstract fun remoteKeysDao(): GithubProfileRemoteKeysDao
 
   companion object {
 
