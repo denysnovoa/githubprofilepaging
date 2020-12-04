@@ -1,3 +1,4 @@
+rootProject.name = "githubpaging"
 include ':app:githubpagingcore'
 include ':app'
-rootProject.name = "githubpaging"
+include ':app:compose'
