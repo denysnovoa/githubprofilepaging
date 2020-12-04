@@ -3,7 +3,9 @@ package com.example.compose
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -19,7 +21,7 @@ class MainActivityCompose : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       MyApp {
-        Greeting("Android")
+        MyScreenContent()
       }
     }
   }
@@ -38,7 +40,7 @@ fun MyApp(content: @Composable () -> Unit) {
 @Composable
 fun Greeting(name: String) {
   Surface(color = Color.Yellow) {
-    Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
+    Text(text = "Hello2 $name!", modifier = Modifier.padding(24.dp))
   }
 }
 
@@ -46,6 +48,16 @@ fun Greeting(name: String) {
 @Composable
 fun DefaultPreview() {
   MyApp {
-    Greeting("Android")
+    MyScreenContent()
+  }
+}
+
+@Composable
+fun MyScreenContent(names: List<String> = listOf("Android", "there")) {
+  Column {
+    for (name in names) {
+      Greeting(name = name)
+      Divider(color = Color.Black)
+    }
   }
 }
